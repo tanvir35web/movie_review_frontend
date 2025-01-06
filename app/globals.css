@@ -26,3 +26,22 @@ body {
   }
 }
 
+.scrollbar-hide {
+  overflow: auto; 
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; 
+}
+
+/* For the entire document */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
