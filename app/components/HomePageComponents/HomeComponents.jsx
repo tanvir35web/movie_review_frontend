@@ -56,8 +56,12 @@ const HomeComponents = () => {
                             </div>
                             <div className="relative w-[70%] h-[380px] bg-gray-900 bg-opacity-30 rounded-3xl shadow-lg flex items-center justify-center">
                                 <Image src="/stock-image/hero-2.jpg" width={400} height={380} alt="banner" className="absolute left-0 h-full w-auto rounded-l-3xl shadow-lg  transition-transform duration-500 ease-in-out transform hover:translate-x-full" />
-                                <h1 className="text-white text-2xl font-bold z-10 p-4 text-right max-w-[60%] absolute right-4">Discover the best movies, read honest reviews, and share your thoughts with a global community of movie enthusiasts.</h1>
+                                <h1 className="text-white text-2xl font-bold z-10 p-4 text-right max-w-[60%] absolute right-4">Discover the best <span className="text-red-600 text-[44px]">Movies</span>, read honest <span className="text-yellow-400 text-[40px]">Reviews</span>, and share your thoughts with a global community of movie enthusiasts.</h1>
                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-800 to-gray-900 opacity-100 rounded-3xl z-2"></div>
+                                <div className="absolute right-7 bottom-5 flex items-center gap-5">
+                                    <Image src="/stock-image/youtube-logo.png" width={40} height={30} alt="banner" className=" h-auto w-[50px] " />
+                                    <Image src="/stock-image/Netflix_N-logo.png" width={40} height={30} alt="banner" className=" h-[40px] w-[30px] " />
+                                </div>
 
                             </div>
                         </div>
@@ -119,17 +123,19 @@ const HomeComponents = () => {
                         </div>
                     </div>
 
-                    <div className="mt-10">
-                        <div className="relative w-full h-full rounded-3xl shadow-lg">
+                    {/* Footer Section   */}
+                    <div className="mt-16">
+                        <div className="relative w-full h-full rounded-3xl shadow-lg flex items-center justify-center">
                             <Image src="/stock-image/mov-grid.jpg" width={1920} height={300} alt="footer" className="w-full h-full object-cover rounded-3xl" />
-                            <div className="absolute inset-0 bg-black opacity-65 rounded-3xl"></div>
-                            <div className="absolute inset-0 flex flex-col gap-16 items-center justify-center">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-3xl"></div>
+                            <div className="absolute bottom-16 mx-auto flex flex-col gap-8 items-center justify-center">
                                 <h1 className="text-white text-4xl font-bold">Join our community of movie enthusiasts today!</h1>
-                                <button className=" px-8 py-4 text-xl rounded-xl bg-black bg-opacity-40 border border-blue-600 uppercase font-bold hover:scale-110 duration-300 hover:bg-opacity-60">Review Now</button>
+                                <button className=" px-8 py-4 text-xl rounded-xl bg-black bg-opacity-40 border border-red-600 text-red-700 uppercase font-bold hover:scale-110 duration-300 hover:bg-opacity-60 tracking-wide">Review Now</button>
 
                             </div>
                         </div>
                     </div>
+
 
                 </div>
             </div >
