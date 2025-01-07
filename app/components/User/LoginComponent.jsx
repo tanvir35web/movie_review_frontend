@@ -14,7 +14,7 @@ const LoginComponent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/login', formData);
+            const response = await axios.post('http://localhost:5000/api/user/login', formData);
             setToken(response.data.token);
             document.cookie = `token=${response.data.token}; path=/`;
             router.push('/');
