@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import { CiSearch } from "react-icons/ci";
 import { IoMdNotifications } from "react-icons/io";
@@ -9,10 +10,24 @@ import { FaDAndD } from "react-icons/fa";
 import { MdScience } from "react-icons/md";
 import FilterCard from "./FilterCard";
 import MovieCard from "./MovieCard";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 
 
 const HomeComponents = () => {
+    const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+    const router = useRouter();
+
+    function toggleProfileDropdownMenu() {
+        setIsProfileMenuOpen(!isProfileMenuOpen);
+    }
+
+    const handleLogout = () => {
+        document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+        router.push('/login');
+    };
+
     return (
         <>
             <div className="w-full h-full bg-gray-100  bg-cover bg-center "
@@ -36,15 +51,37 @@ const HomeComponents = () => {
                         </div>
 
                         {/* profile section  */}
-                        <div className="flex items-center space-x-2 px-3  p-1">
+                        <div className="flex items-center space-x-2 px-3  p-1 relative">
                             <div className="bg-gray-900 bg-opacity-30 rounded-full p-2 cursor-pointer">
                                 <IoMdNotifications size={24} />
                             </div>
 
-                            <div>
+                            <div onClick={toggleProfileDropdownMenu} className="cursor-pointer ">
                                 <Image src="/stock-image/profile1.jpg" alt={"profile-photo"} height={40} width={40} className="rounded-full w-10 h-10 border-[0.5px] border-white border-opacity-30" />
                             </div>
+
+                            {/* user dropdown menu  */}
+                            <div >
+                                {isProfileMenuOpen && (
+                                    <div className="absolute top-14 right-0 z-20 w-[350px] h-[350px] bg-gray-500 backdrop-blur-xl bg-opacity-95 rounded-2xl border border-gray-400 p-4 ">
+                                        <div className="relative">
+                                            <div className="w-full flex items-center justify-center m-auto mb-3">
+                                                <Image src="/stock-image/profile1.jpg" alt={"profile-photo"} height={100} width={100} className="rounded-full w-20 h-20 border-[0.5px] border-white border-opacity-30 " />
+                                            </div>
+                                            <p className="text-center">Tanvirul Islam</p>
+                                            <p className="text-center text-sm">tanvir09@gmail.com</p>
+                                            <p className="text-center mt-4 text-sm">Admin</p>
+                                            <p className="absolute top-[278px] w-full bg-red-700 hover:bg-red-800 duration-150 cursor-pointer text-white px-4 py-2 rounded-xl text-center"
+                                                onClick={handleLogout}>Logout</p>
+                                        </div>
+                                    </div>
+
+                                )}
+
+                            </div>
                         </div>
+
+
                     </div>
 
                     {/* bannar section  */}
