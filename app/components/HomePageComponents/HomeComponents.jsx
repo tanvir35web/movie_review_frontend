@@ -12,6 +12,7 @@ import FilterCard from "./FilterCard";
 import MovieCard from "./MovieCard";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import TreandingMovies from "./TreandingMovies";
 
 
 
@@ -124,23 +125,7 @@ const HomeComponents = () => {
                         <FilterCard icon={<FaFire />} label="Miscellaneous" />
                     </div>
 
-                    {/* Treanding Movies Section   */}
-                    <div>
-                        <h1 className="text-2xl font-bold mt-10">Trending Movies</h1>
-                        <div className="flex items-center space-x-6 mt-6 overflow-x-auto scrollbar-hide ">
-                            <MovieCard posterImage="/stock-image/mov-4.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                            <MovieCard posterImage="/stock-image/mov-5.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                            <MovieCard posterImage="/stock-image/mov-3.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                            <MovieCard posterImage="/stock-image/mov-8.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                            <MovieCard posterImage="/stock-image/mov-2.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                            <MovieCard posterImage="/stock-image/mov-1.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                            <MovieCard posterImage="/stock-image/mov-7.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                            <MovieCard posterImage="/stock-image/mov-8.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                            <MovieCard posterImage="/stock-image/mov-9.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                            <MovieCard posterImage="/stock-image/mov-10.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                            <MovieCard posterImage="/stock-image/mov-11.jpg" movieName="The Shawshank Redemption" rating="9.3" releaseYear="1994" />
-                        </div>
-                    </div>
+                    <TreandingMovies />                    
 
                     {/* Old Movies Section   */}
                     <div>
