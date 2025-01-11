@@ -15,7 +15,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/user/register', formData);
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/register`, formData);
             alert(response.data.message);            
             router.push('/login');
         } catch (error) {

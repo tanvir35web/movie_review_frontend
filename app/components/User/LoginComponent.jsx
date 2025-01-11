@@ -14,7 +14,7 @@ const LoginComponent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/user/login', formData);
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, formData);
             setToken(response.data.token);
             document.cookie = `token=${response.data.token}; path=/`;
             router.push('/');

@@ -8,8 +8,8 @@ const Movies = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/api/movies/")
-            .then((response) => {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies`)
+            .then((response) => {   
                 setMovies(response.data);
                 setLoading(false);
             })

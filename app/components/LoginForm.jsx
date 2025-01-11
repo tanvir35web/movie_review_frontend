@@ -25,7 +25,7 @@ const LoginForm = ({ setUser }) => {
 
         try {
             // Make login request to backend API
-            const response = await axios.post('http://localhost:5000/login', {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, {
                 email,
                 password,
             });

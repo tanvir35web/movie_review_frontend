@@ -33,7 +33,7 @@ const CreateMovie = () => {
         }
 
         try {
-            await axios.post("http://localhost:5000/api/movies", formData, {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
