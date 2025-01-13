@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { toast } from "react-toastify";
+import nookies from "nookies";
 
 const MoviePage = ({ params }) => {
   const { movie_id } = params;
@@ -15,8 +15,10 @@ const MoviePage = ({ params }) => {
   const [reviewId, setReviewId] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
 
+  const cookies = nookies.get();
+  const user_id = cookies["user_id"];
+
   const handleSubmitReview = async () => {
-    const user_id = 2;
     const method = reviewExists ? "PATCH" : "POST";
     const endpoint = `http://localhost:5000/api/review`;
 
@@ -27,7 +29,7 @@ const MoviePage = ({ params }) => {
       review_text: reviewText,
     };
 
-    if (reviewExists) {
+    if (reviewExists && reviewId) {
       bodyData.review_id = reviewId.toString();
     }
 
@@ -42,18 +44,22 @@ const MoviePage = ({ params }) => {
 
       if (response.ok) {
         console.log("Review submitted successfully!");
-        toast.success("Review submitted successfully!");
         setSuccessMessage("Review submitted successfully!");
         setTimeout(() => setSuccessMessage(""), 5000);
         setIsEditMode(false);
         setReviewExists(true);
+        fetchReview();
       } else {
         console.error("Failed to submit review.");
-        setSuccessMessage("Error, please try again !");
+        setSuccessMessage(
+          "Error, Make sure all fields are filled properly. please try again !"
+        );
         setTimeout(() => setSuccessMessage(""), 5000);
       }
     } catch (error) {
       console.error("Error submitting review:", error);
+      setSuccessMessage(error);
+      setTimeout(() => setSuccessMessage(""), 5000);
     }
   };
 
@@ -72,7 +78,10 @@ const MoviePage = ({ params }) => {
   const fetchReview = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/review/${movie_id}`
+        `http://localhost:5000/api/review/${movie_id}`,
+        {
+          headers: { user_id: user_id },
+        }
       );
       if (response.ok) {
         const data = await response.json();
@@ -92,9 +101,7 @@ const MoviePage = ({ params }) => {
   useEffect(() => {
     fetchMovie();
     fetchReview();
-  }, [movie_id, reviewId]);
-
-  console.log("review exists", reviewId);
+  }, [movie_id, reviewId, user_id]);
 
   return (
     <div className="p-10 flex w-full m-auto">
@@ -178,7 +185,11 @@ const MoviePage = ({ params }) => {
             )}
           </div>
 
-          {successMessage && <p className="mt-4 ">{successMessage}</p>}
+          {successMessage && (
+            <p className="fixed top-3 right-4 mt-4 bg-gray-700 py-2 px-4 rounded ">
+              {successMessage}
+            </p>
+          )}
         </div>
       </div>
     </div>

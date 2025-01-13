@@ -17,6 +17,7 @@ const LoginComponent = () => {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, formData);
             setToken(response.data.token);
             document.cookie = `token=${response.data.token}; path=/`;
+            document.cookie = `user_id=${response?.data?.user_details?.user_id}; path=/`;
             router.push('/');
         } catch (error) {
             alert(error.response.data.error);
