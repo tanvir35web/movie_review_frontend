@@ -17,12 +17,20 @@ const MovieCard = ({ posterImage, movieName, rating, releaseYear }) => {
         <div className=" mt-3 flex flex-col  space-y-2 pl-2">
           <p className="text-2xl font-semibold">{movieName}</p>
           <div className="w-full flex items-center space-x-8">
-            <div className="flex gap-2">
-              <span>
-                <SiReverbnation />
-              </span>
-              <p>{rating || 7.8}</p>
-            </div>
+            {rating && (
+              <div className="flex gap-2">
+                <span>
+                  <SiReverbnation />
+                </span>
+                <p>
+                  {rating && !isNaN(parseFloat(rating))
+                    ? parseFloat(rating) > 9
+                      ? parseFloat(rating).toFixed(0)
+                      : parseFloat(rating).toFixed(1)
+                    : ""}
+                </p>
+              </div>
+            )}
             <p>
               {new Date(releaseYear)
                 .toLocaleDateString("en-GB", {
