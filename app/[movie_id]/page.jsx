@@ -14,6 +14,7 @@ const MoviePage = ({ params }) => {
   const [reviewExists, setReviewExists] = useState(false);
   const [reviewId, setReviewId] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
+  const [allUserReviews, setAllUserReviews] = useState(null);
 
   const cookies = nookies.get();
   const user_id = cookies["user_id"];
@@ -92,6 +93,22 @@ const MoviePage = ({ params }) => {
           setReviewExists(true);
           setReviewId(review.review_id);
         }
+        fetchAllReviewsForSelectedMovie();
+      }
+    } catch (error) {
+      console.error("Error fetching review:", error);
+    }
+  };
+
+  const fetchAllReviewsForSelectedMovie = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/review/all/${movie_id}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setAllUserReviews(data);
+        // fetchReview();
       }
     } catch (error) {
       console.error("Error fetching review:", error);
@@ -101,98 +118,144 @@ const MoviePage = ({ params }) => {
   useEffect(() => {
     fetchMovie();
     fetchReview();
+    fetchAllReviewsForSelectedMovie();
   }, [movie_id, reviewId, user_id]);
 
+  console.log("R data", allUserReviews);
+
   return (
-    <div className="p-10 flex w-full m-auto">
-      <div className="flex gap-10 maxw-[800px] mt-10">
-        <div>
-          <Image
-            src={movie.poster_photo || "/stock-image/mov-11.jpg"}
-            width={500}
-            height={800}
-            alt="movie"
-            className="w-[450px] h-full rounded-3xl shadow-lg object-cover border border-gray-600"
-          />
+    <>
+      <div className="container m-auto">
+        <div className="p-10  w-full">
+          <div className="flex flex-col gap-10  mt-10">
+            <div className=" flex gap-16">
+              <div>
+                <Image
+                  src={movie.poster_photo || "/stock-image/mov-11.jpg"}
+                  width={500}
+                  height={800}
+                  alt="movie"
+                  className="w-[450px] h-full rounded-3xl shadow-lg object-cover border border-gray-600"
+                />
+              </div>
+              <div className="flex flex-col gap-2 text-gray-200">
+                <h1 className="text-5xl font-bold pb-4">{movie.title}</h1>
+                <p className="mt-2">Movie type: {movie.genre}</p>
+                <p>
+                  Release Date:{" "}
+                  {new Date(movie.release_date)
+                    .toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })
+                    .replace(/(\d+)(?:st|nd|rd|th)/, "$1")}
+                </p>
+                <p>Director: {movie.director}</p>
+                <p className="max-w-[700px] text-gray-400 mt-10">
+                  {movie.synopsis}
+                </p>
+              </div>
+            </div>
+
+            {/* Rating and Review Form */}
+            <div>
+              <div className="mt-8"></div>
+              <h3 className="text-xl font-semibold mb-4">
+                {reviewExists && !isEditMode
+                  ? "Your review"
+                  : "Rate this movie"}
+              </h3>
+              <div className="flex gap-2 mb-4">
+                {[...Array(10)].map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setRating(index + 1)}
+                    className={`text-2xl ${
+                      index < rating ? "text-yellow-400" : "text-gray-500"
+                    }`}
+                    // disabled={!isEditMode && reviewExists}
+                  >
+                    ★
+                  </button>
+                ))}
+              </div>
+              <textarea
+                className="w-full p-3 bg-gray-800 rounded-lg border border-gray-600 text-gray-200"
+                rows="6"
+                placeholder="Write your review here..."
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+                disabled={!isEditMode && reviewExists}
+              />
+              <div className="flex flex-col">
+                <button
+                  className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  onClick={
+                    reviewExists
+                      ? () => setIsEditMode(!isEditMode)
+                      : handleSubmitReview
+                  }
+                >
+                  {isEditMode
+                    ? "Cancel edit"
+                    : reviewExists
+                    ? "Edit Review"
+                    : "Submit Review"}
+                </button>
+                {isEditMode && (
+                  <button
+                    className="mt-4 px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                    onClick={handleSubmitReview}
+                  >
+                    Update Review
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-2 text-gray-200">
-          <h1 className="text-5xl font-bold pb-4">{movie.title}</h1>
-          <p className="mt-2">Movie type: {movie.genre}</p>
-          <p>
-            Release Date:{" "}
-            {new Date(movie.release_date)
-              .toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-              })
-              .replace(/(\d+)(?:st|nd|rd|th)/, "$1")}
+
+        {/* users review list  */}
+        <>
+          <div className="px-10 ">
+            {allUserReviews &&
+              allUserReviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="bg-gray-500 bg-opacity-35 shadow-md rounded-lg p-4 mb-4 flex justify-between"
+                >
+                  <div>
+                    <div className="font-bold text-lg pb-3">
+                      {review.username}
+                    </div>
+                    <div className="text-gray-400 max-w-[650px]">
+                      {review.review_text}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-white pb-3 font-bold text-xl text-right">
+                      {review.rating}/10
+                    </div>
+
+                    {Array(review.rating)
+                      .fill()
+                      .map((_, i) => (
+                        <span key={i}>⭐</span>
+                      ))}
+                  </div>
+                </div>
+              ))}
+          </div>
+        </>
+
+        {successMessage && (
+          <p className="fixed top-3 right-4 mt-4 bg-gray-700 py-2 px-4 rounded ">
+            {successMessage}
           </p>
-          <p>Director: {movie.director}</p>
-          <p className="max-w-[700px] text-gray-400 mt-10">{movie.synopsis}</p>
-        </div>
-
-        {/* Rating and Review Form */}
-        <div>
-          <div className="mt-8"></div>
-          <h3 className="text-xl font-semibold mb-4">
-            {reviewExists && !isEditMode ? "Your review" : "Rate this movie"}
-          </h3>
-          <div className="flex gap-2 mb-4">
-            {[...Array(10)].map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setRating(index + 1)}
-                className={`text-2xl ${
-                  index < rating ? "text-yellow-400" : "text-gray-500"
-                }`}
-                // disabled={!isEditMode && reviewExists}
-              >
-                ★
-              </button>
-            ))}
-          </div>
-          <textarea
-            className="w-full p-3 bg-gray-800 rounded-lg border border-gray-600 text-gray-200"
-            rows="4"
-            placeholder="Write your review here..."
-            value={reviewText}
-            onChange={(e) => setReviewText(e.target.value)}
-            disabled={!isEditMode && reviewExists}
-          />
-          <div className="flex flex-col">
-            <button
-              className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              onClick={
-                reviewExists
-                  ? () => setIsEditMode(!isEditMode)
-                  : handleSubmitReview
-              }
-            >
-              {isEditMode
-                ? "Cancel edit"
-                : reviewExists
-                ? "Edit Review"
-                : "Submit Review"}
-            </button>
-            {isEditMode && (
-              <button
-                className="mt-4 px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
-                onClick={handleSubmitReview}
-              >
-                Update Review
-              </button>
-            )}
-          </div>
-
-          {successMessage && (
-            <p className="fixed top-3 right-4 mt-4 bg-gray-700 py-2 px-4 rounded ">
-              {successMessage}
-            </p>
-          )}
-        </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
 
