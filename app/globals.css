@@ -45,3 +45,33 @@ html {
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #97979734; /* Background color of the scrollbar track */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 0px solid #2d2d2d; /* Adds padding-like space to the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888; /* Color when the user hovers over the thumb */
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #aaa; /* Color when the thumb is actively dragged */
+}
+
+/* Optional: Horizontal Scrollbar Styling */
+::-webkit-scrollbar-horizontal {
+  height: 8px; /* Height of the horizontal scrollbar */
+}
+

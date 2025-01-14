@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { CiSearch } from "react-icons/ci";
 import { IoMdNotifications } from "react-icons/io";
 import { FaFire } from "react-icons/fa";
 import { GiAbstract057 } from "react-icons/gi";
@@ -10,11 +9,13 @@ import { FaDAndD } from "react-icons/fa";
 import { MdScience } from "react-icons/md";
 import FilterCard from "./FilterCard";
 import MovieCard from "./MovieCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import TreandingMovies from "./TreandingMovies";
 import nookies from "nookies";
 import TopRatedMovies from "./TopRatedMovies";
+import Search from "./Search";
+import { FaUserAlt } from "react-icons/fa";
 
 const HomeComponents = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -22,6 +23,7 @@ const HomeComponents = () => {
   const router = useRouter();
   const cookies = nookies.get();
   const user_id = cookies["user_id"];
+  const profileMenuRef = useRef(null);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -48,6 +50,23 @@ const HomeComponents = () => {
     router.push("/login");
   };
 
+  // Close menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
+        setIsProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <div
@@ -63,19 +82,7 @@ const HomeComponents = () => {
               <h1 className="font-bold text-2xl ">MOVIE-REVIEW</h1>
             </div>
 
-            {/* search section  */}
-            <div className="relative bg-gray-900 w-[30%] h-12 rounded-full m-auto bg-opacity-30  ps-8 pr-16 py-3 ">
-              <input
-                className=" outline-none bg-transparent w-full"
-                placeholder="Search movie by name, type or year ..."
-              ></input>
-              <div>
-                <CiSearch
-                  className="absolute top-[17%] right-[3%]  cursor-pointer"
-                  size={30}
-                />
-              </div>
-            </div>
+            <Search />
 
             {/* profile section  */}
             <div className="flex items-center space-x-2 px-3  p-1 relative">
@@ -87,34 +94,35 @@ const HomeComponents = () => {
                 onClick={toggleProfileDropdownMenu}
                 className="cursor-pointer "
               >
-                <Image
+                <div className="rounded-full w-10 h-10  bg-gray-900 bg-opacity-30 flex items-center justify-center">
+                  <FaUserAlt size={20} />
+                </div>
+                {/* <Image
                   src="/stock-image/profile1.jpg"
                   alt={"profile-photo"}
                   height={40}
                   width={40}
                   className="rounded-full w-10 h-10 border-[0.5px] border-white border-opacity-30"
-                />
+                /> */}
               </div>
 
               {/* user dropdown menu  */}
               <div>
                 {isProfileMenuOpen && userInfo && (
-                  <div className="absolute top-14 right-0 z-20 w-[350px] h-[250px] bg-gray-500 backdrop-blur-xl bg-opacity-95 rounded-2xl border border-gray-400 p-4 shadow-xl">
+                  <div
+                    ref={profileMenuRef}
+                    className="absolute top-14 right-0 z-20 w-[350px] h-[250px] bg-gray-500 backdrop-blur-xl bg-opacity-95 rounded-2xl border border-gray-400 p-4 shadow-xl"
+                  >
                     <div className="relative">
                       <div className="flex bg-gray-400 p-2 items-center bg-opacity-30 gap-4 rounded-xl">
                         <div className="">
-                          <Image
-                            src="/stock-image/profile1.jpg"
-                            alt={"profile-photo"}
-                            height={100}
-                            width={100}
-                            className="rounded-xl w-20 h-20 "
-                          />
+                          <div className="rounded-2xl  w-16 h-16  bg-gray-900 bg-opacity-30 flex items-center justify-center">
+                            <FaUserAlt size={30} />
+                          </div>
                         </div>
                         <div>
                           <p className="">{userInfo.username || ""}</p>
                           <p className=" mt-2 text-sm">
-                            {" "}
                             User Type :{" " + userInfo.role || ""}
                           </p>
                         </div>
@@ -187,31 +195,37 @@ const HomeComponents = () => {
             </div>
           </div>
 
-          {/* filter section  */}
-          <div className="mt-10 flex items-center space-x-4 overflow-x-auto scrollbar-hide">
-            <FilterCard icon={<FaFire />} label="Trending" />
-            <FilterCard icon={<GiAbstract057 />} label="Action" />
-            <FilterCard icon={<FaHeartbeat />} label="Romance" />
-            <FilterCard icon={<SiBigcartel />} label="Animation" />
-            <FilterCard icon={<FaDAndD />} label="Horror" />
-            <FilterCard icon={<MdScience />} label="Science" />
-            <FilterCard icon={<FaFire />} label="Comedy" />
-            <FilterCard icon={<FaFire />} label="Miscellaneous" />
-            <FilterCard icon={<FaFire />} label="Trending" />
-            <FilterCard icon={<GiAbstract057 />} label="Action" />
-            <FilterCard icon={<FaHeartbeat />} label="Romance" />
-            <FilterCard icon={<SiBigcartel />} label="Animation" />
-            <FilterCard icon={<FaDAndD />} label="Horror" />
-            <FilterCard icon={<MdScience />} label="Science" />
-            <FilterCard icon={<FaFire />} label="Comedy" />
-            <FilterCard icon={<FaFire />} label="Miscellaneous" />
+          {/* Scrolling container section  */}
+          <div className="relative overflow-hidden mt-10">
+            <div className="flex w-full animate-infinite-scroll space-x-4">
+              <div className="flex gap-4">
+                <FilterCard icon={<FaFire />} label="Trending" />
+                <FilterCard icon={<GiAbstract057 />} label="Action" />
+                <FilterCard icon={<FaHeartbeat />} label="Romance" />
+                <FilterCard icon={<SiBigcartel />} label="Animation" />
+                <FilterCard icon={<FaDAndD />} label="Horror" />
+                <FilterCard icon={<MdScience />} label="Science" />
+                <FilterCard icon={<FaFire />} label="Comedy" />
+                <FilterCard icon={<FaFire />} label="Miscellaneous" />
+              </div>
+              <div className="flex gap-4">
+                <FilterCard icon={<FaFire />} label="Trending" />
+                <FilterCard icon={<GiAbstract057 />} label="Action" />
+                <FilterCard icon={<FaHeartbeat />} label="Romance" />
+                <FilterCard icon={<SiBigcartel />} label="Animation" />
+                <FilterCard icon={<FaDAndD />} label="Horror" />
+                <FilterCard icon={<MdScience />} label="Science" />
+                <FilterCard icon={<FaFire />} label="Comedy" />
+                <FilterCard icon={<FaFire />} label="Miscellaneous" />
+                <FilterCard icon={<FaDAndD />} label="Horror" />
+                <FilterCard icon={<FaHeartbeat />} label="Romance" />
+              </div>
+            </div>
           </div>
-
 
           <TopRatedMovies />
 
           <TreandingMovies />
-
 
           {/* Footer Section   */}
           <div className="mt-16">
