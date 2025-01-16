@@ -16,6 +16,7 @@ import nookies from "nookies";
 import TopRatedMovies from "./TopRatedMovies";
 import Search from "./Search";
 import { FaUserAlt } from "react-icons/fa";
+import { MdSpaceDashboard } from "react-icons/md";
 
 const HomeComponents = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -97,13 +98,6 @@ const HomeComponents = () => {
                 <div className="rounded-full w-10 h-10  bg-gray-900 bg-opacity-30 flex items-center justify-center">
                   <FaUserAlt size={20} />
                 </div>
-                {/* <Image
-                  src="/stock-image/profile1.jpg"
-                  alt={"profile-photo"}
-                  height={40}
-                  width={40}
-                  className="rounded-full w-10 h-10 border-[0.5px] border-white border-opacity-30"
-                /> */}
               </div>
 
               {/* user dropdown menu  */}
@@ -111,7 +105,7 @@ const HomeComponents = () => {
                 {isProfileMenuOpen && userInfo && (
                   <div
                     ref={profileMenuRef}
-                    className="absolute top-14 right-0 z-20 w-[350px] h-[250px] bg-gray-500 backdrop-blur-xl bg-opacity-95 rounded-2xl border border-gray-400 p-4 shadow-xl"
+                    className="absolute top-14 right-0 z-20 w-[350px] h-[270px] bg-gray-500 backdrop-blur-xl bg-opacity-95 rounded-2xl border border-gray-400 p-4 shadow-xl"
                   >
                     <div className="relative">
                       <div className="flex bg-gray-400 p-2 items-center bg-opacity-30 gap-4 rounded-xl">
@@ -128,10 +122,26 @@ const HomeComponents = () => {
                         </div>
                       </div>
                       <div className="bg-gray-400 p-2 mt-2 rounded-xl bg-opacity-30">
-                        <p className="text-sm ps-1">Review Points: 18</p>
+                        <p className="text-sm ps-1">
+                          Review Points: {userInfo?.review_count}{" "}
+                        </p>
                       </div>
+
+                      {userInfo && userInfo?.role === "admin" && (
+                        <div className="bg-gray-400 hover:bg-gray-600 duration-200 p-2 mt-2 rounded-xl bg-opacity-30 cursor-pointer"
+                        onClick={() => router.push('/deshboard')}>
+                          <p className="text-sm ps-1 flex items-center gap-1">
+                            {" "}
+                            <span>
+                              <MdSpaceDashboard />
+                            </span>{" "}
+                            Deshboard
+                          </p>
+                        </div>
+                      )}
+
                       <p
-                        className="absolute top-[178px] w-full bg-red-700 hover:bg-red-800 duration-150 cursor-pointer text-white px-4 py-2 rounded-xl text-center"
+                        className="absolute top-[198px] w-full bg-red-700 hover:bg-red-800 duration-150 cursor-pointer text-white px-4 py-2 rounded-xl text-center"
                         onClick={handleLogout}
                       >
                         Logout
@@ -243,7 +253,7 @@ const HomeComponents = () => {
                   Join our community of movie enthusiasts today!
                 </h1>
                 <button className=" px-8 py-4 text-xl rounded-xl bg-black bg-opacity-40 border border-red-600 text-red-700 uppercase font-bold hover:scale-110 duration-300 hover:bg-opacity-60 tracking-wide">
-                  Review Now
+                  Explore More
                 </button>
               </div>
             </div>

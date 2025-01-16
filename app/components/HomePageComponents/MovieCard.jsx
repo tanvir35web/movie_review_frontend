@@ -15,7 +15,7 @@ const MovieCard = ({ posterImage, movieName, rating, releaseYear }) => {
           />
         </div>
         <div className=" mt-3 flex flex-col  space-y-2 pl-2">
-          <p className="text-2xl font-semibold">{movieName}</p>
+          <p className="text-xl font-semibold">{movieName}</p>
           <div className="w-full flex items-center space-x-8">
             {rating && (
               <div className="flex gap-2">
