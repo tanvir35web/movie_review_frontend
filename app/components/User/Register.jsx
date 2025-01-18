@@ -38,7 +38,7 @@ const Register = () => {
       <div className="flex items-center justify-center h-screen ">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col  gap-3 bg-white backdrop-blur-sm bg-opacity-20 p-12 rounded-xl shadow-md w-full min-w-[500px]"
+          className="flex flex-col  gap-3 bg-gray-800 backdrop-blur-lg bg-opacity-20 p-12 py-16 rounded-xl shadow-md w-full min-w-[600px]"
         >
           <p className="text-2xl font-bold mb-4">Register</p>
           <input
@@ -71,7 +71,7 @@ const Register = () => {
           </select>
           <button
             type="submit"
-            className="p-2 bg-blue-500 text-white rounded w-full flex items-center justify-center hover:bg-blue-700"
+            className="p-2 bg-blue-500 text-white rounded w-full flex items-center justify-center hover:bg-blue-700 duration-200"
           >
             {isLoading ? (
               <svg

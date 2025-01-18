@@ -35,9 +35,9 @@ const LoginComponent = () => {
     <div className="flex items-center justify-center min-h-screen ">
       <form
         onSubmit={handleSubmit}
-        className="bg-white backdrop-blur-sm bg-opacity-20 p-12 rounded-xl shadow-md w-full min-w-[500px]"
+        className="bg-gray-800 backdrop-blur-lg border border-gray-300 border-opacity-35 bg-opacity-20 p-12 py-16 rounded-xl shadow-md w-full min-w-[600px]"
       >
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
+        <h2 className="text-3xl font-bold mb-8">Login</h2>
         <div className="mb-4">
           <input
             type="text"
@@ -60,7 +60,7 @@ const LoginComponent = () => {
         </div>
         <button
           type="submit"
-          className="w-full flex items-center justify-center bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          className="w-full flex items-center justify-center bg-blue-500 text-white p-2 rounded hover:bg-blue-600 duration-200"
         >
           {isLoading ? (
             <svg
