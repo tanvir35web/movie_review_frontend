@@ -3,6 +3,8 @@ import MovieCardAdmin from "@/app/components/HomePageComponents/MovieCardAdmin";
 import AdminMoviesSkeletonLoader from "@/app/components/SkeletonLoader/AdminMoviesSkeletonLoader";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { MdOutlineArrowBack } from "react-icons/md";
+
 
 const Deshboard = () => {
   const [movies, setMovies] = useState([]);
@@ -62,15 +64,15 @@ const Deshboard = () => {
 
           <>
             <div className="flex gap-4 mt-6">
-              <div className="bg-gray-500 bg-opacity-80 w-full h-[150px] rounded-2xl flex items-center justify-center flex-col gap-3 border border-gray-300  border-opacity-25 shadow-xl">
+              <div className="bg-gray-800 bg-opacity-80 w-full h-[150px] rounded-2xl flex items-center justify-center flex-col gap-3 border border-gray-300  border-opacity-25 shadow-xl">
                 <p className="text-2xl font-bold"> {count.movie_count} </p>
                 <p>Total Number of Movie</p>
               </div>
-              <div className="bg-gray-500 bg-opacity-80 w-full h-[150px] rounded-2xl flex items-center justify-center flex-col gap-3 border border-gray-300  border-opacity-25 shadow-xl">
+              <div className="bg-gray-800 bg-opacity-80 w-full h-[150px] rounded-2xl flex items-center justify-center flex-col gap-3 border border-gray-300  border-opacity-25 shadow-xl">
                 <p className="text-2xl font-bold"> {count.review_count} </p>
                 <p>Total Number of Review</p>
               </div>
-              <div className="bg-gray-500 bg-opacity-80 w-full h-[150px] rounded-2xl flex items-center justify-center flex-col gap-3 border border-gray-300  border-opacity-25 shadow-xl">
+              <div className="bg-gray-800 bg-opacity-80 w-full h-[150px] rounded-2xl flex items-center justify-center flex-col gap-3 border border-gray-300  border-opacity-25 shadow-xl">
                 <p className="text-2xl font-bold"> {count.user_count} </p>
                 <p>Total Number of User</p>
               </div>
@@ -98,13 +100,15 @@ const Deshboard = () => {
           </>
           <p
             onClick={() => router.push("/create-movie")}
-            className="z-20 absolute bottom-8 right-8 text-lg tracking-wide shadow-lg cursor-pointer hover:bg-opacity-95 duration-200 font-semibold mt-8 bg-gray-500 bg-opacity-75 p-4 px-7 rounded-xl border border-gray-300  border-opacity-25"
+            className="z-20 absolute bottom-8 right-8 text-lg tracking-wide shadow-lg cursor-pointer hover:bg-opacity-95 duration-200 font-semibold mt-8 bg-gray-800 bg-opacity-75 p-4 px-7 rounded-xl border border-gray-300  border-opacity-25"
           >
             {" "}
             + Add Moive
           </p>
 
           <></>
+          <p onClick={() => router.push("/")} className="w-fit flex items-center gap-2 text-lg tracking-wide shadow-lg cursor-pointer hover:bg-opacity-95 duration-200 font-semibold mt-8 bg-gray-800 bg-opacity-75 p-4 px-7 rounded-xl border border-gray-300  border-opacity-25"> <span><MdOutlineArrowBack />
+          </span> Back to Home</p>
         </div>
       </div>
     </>

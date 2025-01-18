@@ -87,7 +87,7 @@ const HomeComponents = () => {
 
             {/* profile section  */}
             <div className="flex items-center space-x-2 px-3  p-1 relative">
-              <div className="bg-gray-900 bg-opacity-30 rounded-full p-2 cursor-pointer">
+              <div className="bg-gray-900 bg-opacity-30 hover:bg-opacity-45 duration-200 rounded-full p-2 cursor-pointer">
                 <IoMdNotifications size={24} />
               </div>
 
@@ -95,7 +95,7 @@ const HomeComponents = () => {
                 onClick={toggleProfileDropdownMenu}
                 className="cursor-pointer "
               >
-                <div className="rounded-full w-10 h-10  bg-gray-900 bg-opacity-30 flex items-center justify-center">
+                <div className="rounded-full w-10 h-10  bg-gray-900 bg-opacity-30 hover:bg-opacity-45 duration-200 flex items-center justify-center">
                   <FaUserAlt size={20} />
                 </div>
               </div>
@@ -250,9 +250,11 @@ const HomeComponents = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-3xl"></div>
               <div className="absolute bottom-16 mx-auto flex flex-col gap-8 items-center justify-center">
                 <h1 className="text-white text-4xl font-bold">
-                  Join our community of movie enthusiasts today!
+                  Explore our community of movie enthusiasts today!
                 </h1>
-                <button className=" px-8 py-4 text-xl rounded-xl bg-black bg-opacity-40 border border-red-600 text-red-700 uppercase font-bold hover:scale-110 duration-300 hover:bg-opacity-60 tracking-wide">
+                <button 
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className=" px-8 py-4 text-xl rounded-xl bg-black bg-opacity-40 border border-red-600 text-red-700 uppercase font-bold hover:scale-110 duration-300 hover:bg-opacity-60 tracking-wide">
                   Explore More
                 </button>
               </div>

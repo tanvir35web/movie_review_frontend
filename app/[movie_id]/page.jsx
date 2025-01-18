@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import nookies from "nookies";
+import { useRouter } from "next/navigation";
 
 const MoviePage = ({ params }) => {
   const { movie_id } = params;
@@ -15,6 +16,8 @@ const MoviePage = ({ params }) => {
   const [reviewId, setReviewId] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [allUserReviews, setAllUserReviews] = useState(null);
+
+  const router = useRouter();
 
   const cookies = nookies.get();
   const user_id = cookies["user_id"];
@@ -135,7 +138,7 @@ const MoviePage = ({ params }) => {
                   width={500}
                   height={800}
                   alt="movie"
-                  className="w-[450px] h-full rounded-3xl shadow-lg object-cover border border-gray-600"
+                  className="w-[550px] h-full rounded-3xl shadow-lg object-cover border border-gray-600"
                 />
               </div>
               <div className="flex flex-col gap-2 text-gray-200">
@@ -152,7 +155,7 @@ const MoviePage = ({ params }) => {
                     .replace(/(\d+)(?:st|nd|rd|th)/, "$1")}
                 </p>
                 <p>Director: {movie.director}</p>
-                <p className="max-w-[700px] text-gray-400 mt-10">
+                <p className="max-w-[1100px] text-gray-400 mt-10 max-h-[500px] overflow-y-auto p-4 rounded-xl bg-gray-700 bg-opacity-35 leading-[25px] text-justify">
                   {movie.synopsis}
                 </p>
               </div>
@@ -246,7 +249,9 @@ const MoviePage = ({ params }) => {
                   </div>
                 </div>
               ))}
+               <p onClick={() => router.push("/")} className="mt-6 cursor-pointer bg-gray-600 duration-200 hover:bg-gray-700 py-2 px-4 rounded w-fit mb-8">Back to Home</p>
           </div>
+         
         </>
 
         {successMessage && (

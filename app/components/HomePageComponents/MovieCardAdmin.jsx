@@ -28,7 +28,7 @@ const MovieCardAdmin = ({
   return (
     <>
       <div className="flex flex-col gap-2 relative">
-        <div className="mt-1 flex space-x-4 p-2 rounded-xl bg-gray-500 bg-opacity-70 backdrop-blur-xl w-[400px]  shadow-lg border border-gray-300  border-opacity-15 hover:border-opacity-45 duration-200">
+        <div className="mt-1 flex space-x-4 p-2 rounded-xl bg-gray-800 bg-opacity-70 backdrop-blur-xl w-[400px]  shadow-lg border border-gray-300  border-opacity-15 hover:border-opacity-45 duration-200">
           <Image
             src={posterImage}
             width={50}
