@@ -1,6 +1,4 @@
 "use client"
-import CreateMovie from "@/app/components/CreateMovie";
-import LoginForm from "@/app/components/LoginForm";
 import RegisterForm from "@/app/components/RegisterForm";
 
 const Login = () => {

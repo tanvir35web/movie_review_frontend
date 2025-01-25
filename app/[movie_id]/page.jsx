@@ -259,7 +259,7 @@ const MoviePage = ({ params }) => {
                       <div className="font-bold text-lg pb-3">
                         {review.username}
                       </div>
-                      <div className="text-gray-400 max-w-[650px]">
+                      <div className="text-gray-400 max-w-[1150px]  text-justify pb-3">
                         {review.review_text}
                       </div>
                     </div>
